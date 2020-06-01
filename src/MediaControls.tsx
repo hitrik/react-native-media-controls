@@ -50,27 +50,18 @@ const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
     style = {},
     controlsStyle = {},
   } = props;
-  const { initialOpacity, initialIsVisible } = (() => {
+  const { initialIsVisible } = (() => {
     return {
       initialOpacity: 1,
       initialIsVisible: true,
     };
   })();
 
-  const opacity = useRef(new Animated.Value(initialOpacity)).current;
   const [, setIsVisible] = useState(initialIsVisible);
 
-  const fadeInControls = () => {
+  useEffect(() => {
     setIsVisible(true);
-    Animated.timing(opacity, {
-      toValue: 1,
-      duration: 300,
-      delay: 0,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  useEffect(fadeInControls, []);
+  }, []);
 
   const onReplay = onReplayCallback || (() => {});
 
@@ -104,8 +95,8 @@ const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
   // };
 
   return (
-    <Animated.View style={[styles.container, { opacity }, style]}>
-      <View style={[styles.container, style]}>
+    <Animated.View style={[styles.container, style]}>
+      <View>
         {children ? (
           <View style={[styles.controlsRow, styles.toolbarRow]}>
             {children}
