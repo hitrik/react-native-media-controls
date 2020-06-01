@@ -1,10 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  View,
-  Animated,
-  TouchableWithoutFeedback,
-  GestureResponderEvent,
-} from "react-native";
+import { View, Animated, GestureResponderEvent } from "react-native";
 import styles from "./MediaControls.style";
 import { PLAYER_STATES } from "./constants/playerStates";
 import { Controls } from "./Controls";
@@ -15,7 +10,14 @@ interface MediaControlsComposition {
   Toolbar: React.FC;
 }
 
+interface Track {
+  title: string;
+  artist: string;
+  id?: number;
+}
+
 export type Props = {
+  style?: object;
   duration: number;
   fadeOutDelay?: number;
   isFullScreen: boolean;
@@ -29,6 +31,8 @@ export type Props = {
   playerState: PLAYER_STATES;
   progress: number;
   showOnStart?: boolean;
+  track?: Track;
+  controlsStyle?: object;
 };
 
 const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
@@ -43,6 +47,8 @@ const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
     onSeeking,
     playerState,
     progress,
+    style = {},
+    controlsStyle = {},
   } = props;
   const { initialOpacity, initialIsVisible } = (() => {
     return {
@@ -52,16 +58,7 @@ const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
   })();
 
   const opacity = useRef(new Animated.Value(initialOpacity)).current;
-  const [isVisible, setIsVisible] = useState(initialIsVisible);
-
-  // const fadeOutControls = (delay = 0) => {
-  //   Animated.timing(opacity, {
-  //     toValue: 0,
-  //     duration: 300,
-  //     delay,
-  //     useNativeDriver: true,
-  //   }).start();
-  // };
+  const [, setIsVisible] = useState(initialIsVisible);
 
   const fadeInControls = () => {
     setIsVisible(true);
@@ -75,19 +72,14 @@ const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
 
   useEffect(fadeInControls, []);
 
-  const onReplay = () => {
-    //fadeOutControls(fadeOutDelay);
-    onReplayCallback();
-  };
-
-  const cancelAnimation = () => opacity.stopAnimation(() => setIsVisible(true));
+  const onReplay = onReplayCallback || (() => {});
 
   const onPause = () => {
     const { playerState, onPaused } = props;
     const { PLAYING, PAUSED } = PLAYER_STATES;
     switch (playerState) {
       case PLAYING: {
-        cancelAnimation();
+        //cancelAnimation();
         break;
       }
       case PAUSED: {
@@ -112,38 +104,33 @@ const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
   // };
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-        console.log("tap on player");
-      }}
-    >
-      <Animated.View style={[styles.container, { opacity }]}>
-        {isVisible && (
-          <View style={styles.container}>
-            <View style={[styles.controlsRow, styles.toolbarRow]}>
-              {children}
-            </View>
-            <Controls
-              onPause={onPause}
-              onReplay={onReplay}
-              isLoading={isLoading}
-              mainColor={mainColor}
-              playerState={playerState}
-            />
-            <Slider
-              progress={progress}
-              duration={duration}
-              mainColor={mainColor}
-              onFullScreen={onFullScreen}
-              playerState={playerState}
-              onSeek={onSeek}
-              onSeeking={onSeeking}
-              onPause={onPause}
-            />
+    <Animated.View style={[styles.container, { opacity }, style]}>
+      <View style={[styles.container, style]}>
+        {children ? (
+          <View style={[styles.controlsRow, styles.toolbarRow]}>
+            {children}
           </View>
-        )}
-      </Animated.View>
-    </TouchableWithoutFeedback>
+        ) : null}
+        <Controls
+          onPause={onPause}
+          onReplay={onReplay}
+          isLoading={isLoading}
+          mainColor={mainColor}
+          playerState={playerState}
+          controlsStyle={controlsStyle}
+        />
+        <Slider
+          progress={progress}
+          duration={duration}
+          mainColor={mainColor}
+          onFullScreen={onFullScreen}
+          playerState={playerState}
+          onSeek={onSeek}
+          onSeeking={onSeeking}
+          onPause={onPause}
+        />
+      </View>
+    </Animated.View>
   );
 };
 
