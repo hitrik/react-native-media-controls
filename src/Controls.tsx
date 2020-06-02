@@ -4,15 +4,17 @@ import styles from "./MediaControls.style";
 
 const Controls = (props: any) => {
   const {
-    isLoading,
+    //isLoading,
     controlsStyle,
     buttonsComponent,
-    isLoadingComponent,
+    info,
+    //isLoadingComponent,
   } = props;
 
   const content = (
     <View style={controlsStyle}>
-      {isLoading ? isLoadingComponent : buttonsComponent}
+      {info}
+      {buttonsComponent}
     </View>
   );
 

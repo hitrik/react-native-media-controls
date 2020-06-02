@@ -35,6 +35,7 @@ export type Props = {
   controlsStyle?: object;
   buttonsComponent?: object;
   isLoadingComponent?: object;
+  info?: object;
 };
 
 const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
@@ -53,6 +54,7 @@ const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
     controlsStyle = {},
     buttonsComponent,
     isLoadingComponent,
+    info
   } = props;
   const { initialIsVisible } = (() => {
     return {
@@ -100,27 +102,28 @@ const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
 
   return (
     <Animated.View style={[styles.container, style]}>
-        <View style={[styles.controlsRow, styles.toolbarRow]}>{children}</View>
-        <Controls
-          onPause={onPause}
-          onReplay={onReplay}
-          isLoading={isLoading}
-          mainColor={mainColor}
-          playerState={playerState}
-          controlsStyle={controlsStyle}
-          buttonsComponent={buttonsComponent}
-          isLoadingComponent={isLoadingComponent}
-        />
-        <Slider
-          progress={progress}
-          duration={duration}
-          mainColor={mainColor}
-          onFullScreen={onFullScreen}
-          playerState={playerState}
-          onSeek={onSeek}
-          onSeeking={onSeeking}
-          onPause={onPause}
-        />
+      <View style={[styles.controlsRow, styles.toolbarRow]}>{children}</View>
+      <Controls
+        info={info}
+        onPause={onPause}
+        onReplay={onReplay}
+        isLoading={isLoading}
+        mainColor={mainColor}
+        playerState={playerState}
+        controlsStyle={controlsStyle}
+        buttonsComponent={buttonsComponent}
+        isLoadingComponent={isLoadingComponent}
+      />
+      <Slider
+        progress={progress}
+        duration={duration}
+        mainColor={mainColor}
+        onFullScreen={onFullScreen}
+        playerState={playerState}
+        onSeek={onSeek}
+        onSeeking={onSeeking}
+        onPause={onPause}
+      />
     </Animated.View>
   );
 };
