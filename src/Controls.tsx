@@ -7,13 +7,11 @@ const Controls = (props: any) => {
     //isLoading,
     controlsStyle,
     buttonsComponent,
-    info,
     //isLoadingComponent,
   } = props;
 
   const content = (
     <View style={controlsStyle}>
-      {info}
       {buttonsComponent}
     </View>
   );

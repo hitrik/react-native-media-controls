@@ -54,7 +54,7 @@ const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
     controlsStyle = {},
     buttonsComponent,
     isLoadingComponent,
-    info
+    info,
   } = props;
   const { initialIsVisible } = (() => {
     return {
@@ -103,8 +103,8 @@ const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
   return (
     <Animated.View style={[styles.container, style]}>
       <View style={[styles.controlsRow, styles.toolbarRow]}>{children}</View>
+      {info}
       <Controls
-        info={info}
         onPause={onPause}
         onReplay={onReplay}
         isLoading={isLoading}
