@@ -33,6 +33,8 @@ export type Props = {
   showOnStart?: boolean;
   track?: Track;
   controlsStyle?: object;
+  buttonsComponent?: object;
+  isLoadingComponent?: object;
 };
 
 const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
@@ -49,6 +51,8 @@ const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
     progress,
     style = {},
     controlsStyle = {},
+    buttonsComponent,
+    isLoadingComponent,
   } = props;
   const { initialIsVisible } = (() => {
     return {
@@ -96,10 +100,7 @@ const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
 
   return (
     <Animated.View style={[styles.container, style]}>
-      <View>
-          <View style={[styles.controlsRow, styles.toolbarRow]}>
-            {children}
-          </View>
+        <View style={[styles.controlsRow, styles.toolbarRow]}>{children}</View>
         <Controls
           onPause={onPause}
           onReplay={onReplay}
@@ -107,6 +108,8 @@ const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
           mainColor={mainColor}
           playerState={playerState}
           controlsStyle={controlsStyle}
+          buttonsComponent={buttonsComponent}
+          isLoadingComponent={isLoadingComponent}
         />
         <Slider
           progress={progress}
@@ -118,7 +121,6 @@ const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
           onSeeking={onSeeking}
           onPause={onPause}
         />
-      </View>
     </Animated.View>
   );
 };
