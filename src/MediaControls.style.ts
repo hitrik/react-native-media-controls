@@ -8,16 +8,6 @@ export default StyleSheet.create({
   container: {
     alignItems: "center",
     backgroundColor: containerBackgroundColor,
-    bottom: 0,
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-between",
-    left: 0,
-    paddingHorizontal: 20,
-    paddingVertical: 13,
-    position: "absolute",
-    right: 0,
-    top: 0,
   },
   controlsRow: {
     alignItems: "center",
