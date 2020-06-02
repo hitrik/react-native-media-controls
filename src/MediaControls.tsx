@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Animated, GestureResponderEvent } from "react-native";
 import styles from "./MediaControls.style";
 import { PLAYER_STATES } from "./constants/playerStates";
