@@ -97,11 +97,9 @@ const MediaControls: React.FC<Props> & MediaControlsComposition = props => {
   return (
     <Animated.View style={[styles.container, style]}>
       <View>
-        {children ? (
           <View style={[styles.controlsRow, styles.toolbarRow]}>
             {children}
           </View>
-        ) : null}
         <Controls
           onPause={onPause}
           onReplay={onReplay}
